@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flatcar-google-image-uploader
+spec:
+  template:
+    spec:
+      containers:
+        - name: uploader
+          env:
+            - name: BUCKET_NAME
+              value: example-bucket-name
