@@ -19,7 +19,7 @@ while true; do
 
   # validate the version number
   if [[ ! "${current_version}" =~ [0-9]{4}\.[0-9]+\.[0-9]+ ]]; then
-    echo "error: unexpected version number format: ${current_version}"
+    echo "error: unexpected version number format: ${current_version}" >&2
     exit 1
   fi
 
