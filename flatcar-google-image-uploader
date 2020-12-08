@@ -6,6 +6,7 @@ BUCKET_NAME="${BUCKET_NAME:?"must be set"}"
 CHANNEL="${CHANNEL:-"stable"}"
 SLEEP_DURATION="${SLEEP_DURATION:-"3600"}"
 GOOGLE_SA_KEY_FILE="${GOOGLE_SA_KEY_FILE:-"./credentials.json"}"
+VERSION="${VERSION:-"current"}"
 
 # configure auth with the provided service account key file
 if [[ -f "${GOOGLE_SA_KEY_FILE}" ]]; then
@@ -14,7 +15,7 @@ fi
 
 while true; do
   # retrieve the version number of the current release
-  current_version=$(wget -O - "https://${CHANNEL}.release.flatcar-linux.net/amd64-usr/current/version.txt" 2> /dev/null \
+  current_version=$(wget -O - "https://${CHANNEL}.release.flatcar-linux.net/amd64-usr/${VERSION}/version.txt" 2> /dev/null \
     | grep "FLATCAR_VERSION=.*$" \
     | sed 's/.*=//g'
   )
