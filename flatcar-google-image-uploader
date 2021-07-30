@@ -7,6 +7,7 @@ CHANNEL="${CHANNEL:-"stable"}"
 SLEEP_DURATION="${SLEEP_DURATION:-"3600"}"
 GOOGLE_SA_KEY_FILE="${GOOGLE_SA_KEY_FILE:-"./credentials.json"}"
 VERSION="${VERSION:-"current"}"
+KEEP_VERSIONS_COUNT="${KEEP_VERSIONS_COUNT:-3}"
 
 # configure auth with the provided service account key file
 if [[ -f "${GOOGLE_SA_KEY_FILE}" ]]; then
@@ -47,7 +48,9 @@ while true; do
 
     old_images=$(gcloud compute images list \
       --format="value(NAME)" \
+      --sort-by="~creationTimestamp" \
       --filter="name~'flatcar-${CHANNEL}-.*' AND name!='${IMAGE_NAME}'" \
+      | tail +"${KEEP_VERSIONS_COUNT}" \
       | xargs
     )
     if [[ -n "${old_images}" ]]; then
